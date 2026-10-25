@@ -77,7 +77,7 @@ while True:
             exit()
             break
         else:
-            print("choose numbers from above otherwise,Exit")
+            print("choose number from above otherwise,Exit")
     else:
         print("Invalid Operator")
  except ValueError:
