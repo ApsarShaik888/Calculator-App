@@ -55,7 +55,7 @@ def exit():
 while True:
 #print("Hello , Choose the Operator \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Modulous\n")
  try:
-    n=int(input("Choose the Operator \n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Modulous\n 6.power\n 7.square\n 8.percentage\n 9.Exit\n"))
+    n=int(input("Choose the Operator\n 1.Add \n 2.Subtract \n 3.Multiply \n 4.Divide \n 5.Modulous\n 6.power\n 7.square\n 8.percentage\n 9.Exit\n"))
     if(n>0):
         if(n==1):
             Add()
