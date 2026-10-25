@@ -79,6 +79,6 @@ while True:
         else:
             print("choose numbers from above otherwise,Exit")
     else:
-        print("Invalid Operator")
+        print("Invalid Operator ")
  except ValueError:
      print("Invalid Operator,Please enter numbers only from the menu")
