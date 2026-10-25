@@ -25,7 +25,7 @@
    3. View the result
    4. Continue with another calculation or exit
 6. Technologies
-   - Python 3.x
+   - Python 3.x (for example 3.10.14 version)
    - math module (for square root)
 7. Author
     - GitHub: ApsarShaik888
