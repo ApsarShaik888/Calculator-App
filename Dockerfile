@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 #run the calculator app code in container
-CMD ["python","calculator.py"]
+CMD ["python3","calculator.py"]
 
 
 
