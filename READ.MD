@@ -116,3 +116,72 @@ Commit and push to GitHub: git push origin main.
 
 Go to Harness -> Executions.
 You should see a new pipeline execution appear, triggered by the Webhook.
+
+🐳 CI/CD Integration: Build & Push Docker Image via Harness to Docker Hub
+This document outlines the workflow to automatically build a Docker image from a GitHub repository and push it to Docker Hub whenever code is pushed, using Harness CI.
+ Step 1: Create a Repository on Docker Hub:
+1. Log in to [Docker Hub](https://hub.docker.com).
+2. Click Create repository.
+3. Name: `apsarshaik888/calculator-app ` (or your preferred name).
+4. Visibility: Choose Public.
+5. Click Create.
+Step 2: Generate a Docker Hub Personal Access Token (PAT):
+Harness needs a secure token to push images, not your account password.
+1. In Docker Hub, click your avatar (top right) -> Account settings.
+2. Go to Security -> Personal access tokens -> Generate new token.
+3. Description: `harness-ci-token`.
+4. Permissions: Select Read, Write, Delete.
+5. Click Generate and copy the token immediately (you won't see it again).
+docker repo-
+apsarshaik888/calculator-app
+Docker run-
+docker login -u apsarshaik888
+Docker token-
+dc******
+
+Step 3: Create the Docker Hub Connector in Harness:
+1. In Harness, go to Project Settings -> Connectors -> + New Connector -> Docker Registry.
+2. Name: `Calculator-App-Connector-DockerRegistry`.
+3. Provider Type: Docker Hub.
+4. URL: `https://index.docker.io/v1/` (for private repos) or `https://index.docker.io/v2/` (for public).
+5. Authentication: Select Username and Password.
+   Username: Your Docker Hub username (e.g., `apsarshaik`).
+   Password: Select Create New Secret  and paste the (Docker token )PAT generated in Step 2.
+6. Connectivity Mode: Select Connect through Harness Platform(crucial if using Harness Cloud, as it doesn't require a Delegate).
+7. Click Test Connection. Once it passes, click Save.
+Step 4: Add a Dockerfile to Your Code:
+In your local project folder, create a file named exactly `Dockerfile` (no file extension) with the following content (example for a Python app):
+```dockerfile
+# Downloads python base image
+FROM python:3.10-slim
+
+# Sets the working directory
+WORKDIR /app
+
+# Copies local files to the container
+COPY . .
+
+# Runs the application
+CMD ["python3", "calculate.py"]
+```
+Commit and push this file to your GitHub repository (ensure you push to the `main` branch).
+ Step 5: Edit the Harness Pipeline to Build and Push:
+1. Open your existing Harness pipeline and click visual Studio.
+2. In the Build Stage (Execution tab), click the `+` button to add a new step after your existing steps.
+3. Search for and select Build and Push an image to Docker Registry.
+4. Configure the step:
+   Name: `Build and Push to DockerHub`
+   Container Registry: Select `DockerHub_Connector`.
+   Image Repository: `<your-dockerhub-username>/calculator-app-harness-ci` (e.g., `apsarshaik888/calculator-app-harness-ci`).
+   Tags: `latest` (or `<+pipeline.sequenceId>` to version them).
+   Dockerfile: `Dockerfile`.
+   Context: `.` (current directory).
+5. Click Apply Changes and Save the pipeline.
+Step 6: Trigger and Verify:
+1. Make any small change to your code and push it to the `main` branch.
+2. The GitHub Webhook triggers the Harness pipeline automatically.
+3. Go to Harness -> Executions and watch the pipeline run.
+4. Once successful, go to your Docker Hub Repository. You will see the new image with the `latest` tag pushed seconds ago.
+### 🎉 Congratulations!
+ 
+
