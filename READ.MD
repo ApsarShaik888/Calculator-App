@@ -29,7 +29,7 @@
    - math module (for square root)
 7. Author
     - GitHub: ApsarShaik888
-8. Screenshot
+8. Screenshot of outputs
     ![img.png](img.png)
     ![img_1.png](img_1.png)
     ![img_2.png](img_2.png)
